@@ -186,17 +186,21 @@ mkdir -p $temp_dir
 #     a. full/pomDocs.xml - only the first version tag needs replacing.
 #     b. full/pomJavaDoc.xml - all version tags need replacing.
 #     c. full/pomZip.xml - only the first version tag needs replacing.
-#     d. mvp/pomDocs.xml
-#     e. mvp/pomJavaDoc.xml
-#     f. mvp/pomZip.xml
+#     d. full/pomGalasactl.xml
+#     e. mvp/pomDocs.xml
+#     f. mvp/pomJavaDoc.xml
+#     g. mvp/pomZip.xml
+#     h. mvp/pomGalasactl.xml
 
 update_pom_first_version_tag $BASEDIR/full/pomDocs.xml $temp_dir
 update_all_pom_version_tags $BASEDIR/full/pomJavaDoc.xml $temp_dir
 update_pom_first_version_tag $BASEDIR/full/pomZip.xml $temp_dir
+update_pom_first_version_tag $BASEDIR/full/pomGalasactl.xml $temp_dir
 
 update_pom_first_version_tag $BASEDIR/mvp/pomDocs.xml $temp_dir
 update_all_pom_version_tags $BASEDIR/mvp/pomJavaDoc.xml $temp_dir
 update_pom_first_version_tag $BASEDIR/mvp/pomZip.xml $temp_dir
+update_pom_first_version_tag $BASEDIR/mvp/pomGalasactl.xml $temp_dir
 
 
 
