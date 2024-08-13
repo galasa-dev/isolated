@@ -7,7 +7,7 @@
 
 	<groupId>dev.galasa</groupId>
 	<artifactId>galasactl</artifactId>
-	<version>0.36.0</version>
+	<version>0.37.0</version>
 	<packaging>pom</packaging>
 
     <build>
