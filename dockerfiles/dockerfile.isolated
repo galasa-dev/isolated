@@ -1,8 +1,7 @@
-FROM harbor.galasa.dev/docker_proxy_cache/library/httpd:2.4.59
+FROM harbor.galasa.dev/redhat_proxy_cache/ubi8/httpd-24:1-345
 
 ARG directory
 
-RUN rm -v /usr/local/apache2/htdocs/*
-COPY isolated/dockerfiles/httpdconf/httpd.conf /usr/local/apache2/conf/httpd.conf
+COPY isolated/dockerfiles/httpdconf/httpd.conf /etc/httpd/conf/httpd.conf
 
-COPY ${directory}/target/isolated/ /usr/local/apache2/htdocs/
+COPY ${directory}/target/isolated/ /var/www/html/
