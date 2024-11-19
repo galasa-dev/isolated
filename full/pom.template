@@ -32,7 +32,7 @@
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>galasa-simplatform</artifactId>
-            <version>0.24.0</version>
+            <version>0.38.0</version>
             <type>jar</type>
         </dependency>
 
