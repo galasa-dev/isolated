@@ -21,17 +21,18 @@ jobs:
 
     steps:
 
+      - name: Checkout Galasa
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.NAMESPACE }}/galasa
+          path: galasa
+      
       - name: Turn script into an executable
         run: chmod +x detect-secrets.sh
   
       - name: Run the detect secrets script
         run: ./detect-secrets.sh
 
-      - name: Checkout Galasa
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ env.NAMESPACE }}/galasa
-          path: galasa
 
       - name: Checkout Isolated
         uses: actions/checkout@v4
