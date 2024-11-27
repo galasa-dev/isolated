@@ -31,12 +31,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: isolated
-
-      - name: Turn script into an executable
-        run: chmod +x detect-secrets.sh
-  
-      - name: Run the detect secrets script
-        run: ./detect-secrets.sh
       
       - name: Set up JDK
         uses: actions/setup-java@v4
@@ -215,6 +209,12 @@ jobs:
         working-directory: ./isolated/full
         run : |
           cp -vr resources/* target/isolated/
+      
+      - name: Turn script into an executable
+        run: chmod +x detect-secrets.sh
+  
+      - name: Run the detect secrets script
+        run: ./detect-secrets.sh
 
       - name: Build Docker image for Isolated development maven registry
         uses: docker/build-push-action@v5
