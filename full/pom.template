@@ -14,6 +14,18 @@
 		<galasa.target.repo>file:${project.build.directory}/repo</galasa.target.repo>
 	</properties>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>dev.galasa</groupId>
+				<artifactId>dev.galasa.platform</artifactId>
+				<version>0.38.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>dev.galasa</groupId>
@@ -29,6 +41,13 @@
             <type>pom</type>
         </dependency>
 
+		<dependency>
+            <groupId>dev.galasa</groupId>
+            <artifactId>dev.galasa.platform</artifactId>
+            <version>{{.Release}}</version>
+            <type>pom</type>
+        </dependency>
+
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>galasa-simplatform</artifactId>
@@ -39,8 +58,8 @@
 {{range .Artifacts}}
         <dependency>
             <groupId>{{.GroupId}}</groupId>
-            <artifactId>{{.ArtifactId}}</artifactId>
-            <version>{{.Version}}</version>
+            <artifactId>{{.ArtifactId}}</artifactId>{{if .Version}}
+            <version>{{.Version}}</version>{{end}}
         </dependency>
     {{end}}
 
@@ -104,7 +123,6 @@
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.service.component.annotations</artifactId>
-			<version>1.3.0</version>
 			<type>jar</type>
 		</dependency>
 
@@ -112,43 +130,36 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-api</artifactId>
-			<version>3.141.59</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-ie-driver</artifactId>
-			<version>3.141.59</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-edge-driver</artifactId>
-			<version>3.141.59</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-chrome-driver</artifactId>
-			<version>3.141.59</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-firefox-driver</artifactId>
-			<version>3.141.59</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-opera-driver</artifactId>
-			<version>3.141.59</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-remote-driver</artifactId>
-			<version>3.141.59</version>
 			<type>jar</type>
 		</dependency>
 
