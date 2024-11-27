@@ -39,10 +39,12 @@ jobs:
           distribution: 'semeru'
 
       - name: Turn script into an executable
-        run: chmod +x ./galasa/detect-secrets.sh
+        working-directory: ./isolated
+        run: chmod +x detect-secrets.sh
   
       - name: Run the detect secrets script
-        run: ./galasa/detect-secrets.sh
+        working-directory: ./isolated
+        run: ./detect-secrets.sh
       
       - name:  Generate Isolated pom.xml
         run: |
