@@ -37,6 +37,12 @@ jobs:
         with:
           java-version: '17'
           distribution: 'semeru'
+
+      - name: Turn script into an executable
+        run: chmod +x ./galasa/detect-secrets.sh
+  
+      - name: Run the detect secrets script
+        run: ./galasa/detect-secrets.sh
       
       - name:  Generate Isolated pom.xml
         run: |
@@ -209,12 +215,6 @@ jobs:
         working-directory: ./isolated/full
         run : |
           cp -vr resources/* target/isolated/
-      
-      - name: Turn script into an executable
-        run: chmod +x detect-secrets.sh
-  
-      - name: Run the detect secrets script
-        run: ./detect-secrets.sh
 
       - name: Build Docker image for Isolated development maven registry
         uses: docker/build-push-action@v5
