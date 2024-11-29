@@ -94,17 +94,19 @@
 
 
 
-
+        <!--
+            To resolve commons-logging:1.3.4, commons-parent:72 and org.apache:33 are required.
+        -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-parent</artifactId>
-			<version>34</version>
+			<version>72</version>
 			<type>pom</type>
 		</dependency>
 		<dependency>
 			<groupId>org.apache</groupId>
 			<artifactId>apache</artifactId>
-			<version>13</version>
+			<version>33</version>
 			<type>pom</type>
 		</dependency>
 
