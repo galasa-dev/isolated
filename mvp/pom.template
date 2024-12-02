@@ -41,6 +41,13 @@
             <type>pom</type>
         </dependency>
 
+        <dependency>
+            <groupId>dev.galasa</groupId>
+            <artifactId>dev.galasa.wrapping.parent</artifactId>
+            <version>{{.Release}}</version>
+            <type>pom</type>
+        </dependency>
+
 		<dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.platform</artifactId>
