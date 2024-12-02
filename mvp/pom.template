@@ -105,6 +105,16 @@
 			<type>pom</type>
 		</dependency>
 		<dependency>
+			<groupId>org.junit</groupId>
+			<artifactId>junit-bom</artifactId>
+			<version>5.11.0-M2</version>
+			<type>pom</type>
+		</dependency>
+
+        <!--
+            The following POMs are used to resolve assertj-core:3.11.1
+        -->
+		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-parent-pom</artifactId>
 			<version>2.2.1</version>
@@ -113,9 +123,10 @@
 		<dependency>
 			<groupId>org.junit</groupId>
 			<artifactId>junit-bom</artifactId>
-			<version>5.11.0-M2</version>
+			<version>5.2.0</version>
 			<type>pom</type>
 		</dependency>
+
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.service.component.annotations</artifactId>
