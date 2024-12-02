@@ -7,7 +7,7 @@
 
 	<groupId>dev.galasa</groupId>
 	<artifactId>galasa-isolated-full-maven-repo3</artifactId>
-	<version>0.16.0</version>
+	<version>0.38.0</version>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -15,47 +15,19 @@
 	</properties>
 
 	<dependencies>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.13</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-            <version>4.4.14</version>
-            <type>jar</type>
-        </dependency>
+        <!--
+            The following POMs are used to resolve dev.galasa.wrapping.httpclient-osgi
+        -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcomponents-core</artifactId>
-            <version>4.4.14</version>
+            <version>4.4.16</version>
             <type>pom</type>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpmime</artifactId>
-            <version>4.5.13</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient-cache</artifactId>
-            <version>4.5.13</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>fluent-hc</artifactId>
-            <version>4.5.13</version>
-            <type>jar</type>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcomponents-client</artifactId>
-            <version>4.5.13</version>
+            <version>4.5.14</version>
             <type>pom</type>
         </dependency>
         <dependency>

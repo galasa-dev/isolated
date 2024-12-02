@@ -7,7 +7,7 @@
 
 	<groupId>dev.galasa</groupId>
 	<artifactId>galasa-isolated-full-maven-repo6</artifactId>
-	<version>0.16.0</version>
+	<version>0.38.0</version>
 	<packaging>pom</packaging>
 
 	<properties>
