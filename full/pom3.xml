@@ -14,6 +14,18 @@
 		<galasa.target.repo>file:${project.build.directory}/repo</galasa.target.repo>
 	</properties>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>dev.galasa</groupId>
+				<artifactId>dev.galasa.platform</artifactId>
+				<version>0.38.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
         <!--
             The following POMs are used to resolve dev.galasa.wrapping.httpclient-osgi
@@ -21,19 +33,16 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcomponents-core</artifactId>
-            <version>4.4.16</version>
             <type>pom</type>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcomponents-client</artifactId>
-            <version>4.5.14</version>
             <type>pom</type>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcomponents-parent</artifactId>
-            <version>11</version>
             <type>pom</type>
         </dependency>
 		<dependency>

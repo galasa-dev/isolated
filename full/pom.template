@@ -19,7 +19,7 @@
 			<dependency>
 				<groupId>dev.galasa</groupId>
 				<artifactId>dev.galasa.platform</artifactId>
-				<version>0.38.0</version>
+				<version>{{.Release}}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -58,7 +58,7 @@
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>galasa-simplatform</artifactId>
-            <version>0.38.0</version>
+            <version>{{.Release}}</version>
             <type>jar</type>
         </dependency>
 
@@ -80,19 +80,19 @@
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.simbank.manager</artifactId>
-            <version>0.38.0</version>
+            <version>{{.Release}}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.simbank.tests</artifactId>
-            <version>0.38.0</version>
+            <version>{{.Release}}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.simbank.obr</artifactId>
-            <version>0.38.0</version>
+            <version>{{.Release}}</version>
             <type>obr</type>
         </dependency>
 
