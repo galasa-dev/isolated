@@ -14,17 +14,27 @@
 		<galasa.target.repo>file:${project.build.directory}/repo</galasa.target.repo>
 	</properties>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>dev.galasa</groupId>
+				<artifactId>dev.galasa.platform</artifactId>
+				<version>0.38.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derbyclient</artifactId>
-            <version>10.14.2.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derby-project</artifactId>
-            <version>10.14.2.0</version>
             <type>pom</type>
         </dependency>
 		<dependency>
@@ -40,7 +50,6 @@
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-parent-pom</artifactId>
-			<version>2.2.1</version>
 			<type>pom</type>
 		</dependency>
 		<dependency>

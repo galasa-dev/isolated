@@ -14,36 +14,42 @@
 		<galasa.target.repo>file:${project.build.directory}/repo</galasa.target.repo>
 	</properties>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>dev.galasa</groupId>
+				<artifactId>dev.galasa.platform</artifactId>
+				<version>0.38.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
         <dependency>
 			<groupId>biz.aQute.bnd</groupId>
 			<artifactId>biz.aQute.bnd.gradle</artifactId>
-			<version>5.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>biz.aQute.bnd</groupId>
 			<artifactId>biz.aQute.bnd.embedded-repo</artifactId>
-			<version>5.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>biz.aQute.bnd</groupId>
 			<artifactId>biz.aQute.bndlib</artifactId>
-			<version>5.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>biz.aQute.bnd</groupId>
 			<artifactId>biz.aQute.repository</artifactId>
-			<version>5.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>biz.aQute.bnd</groupId>
 			<artifactId>biz.aQute.resolve</artifactId>
-			<version>5.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>biz.aQute.bnd.builder</groupId>
 			<artifactId>biz.aQute.bnd.builder.gradle.plugin</artifactId>
-			<version>5.3.0</version>
 		</dependency>
 
         <!--
