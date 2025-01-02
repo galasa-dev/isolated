@@ -138,11 +138,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-opera-driver</artifactId>
-			<type>jar</type>
-		</dependency>
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-remote-driver</artifactId>
 			<type>jar</type>
 		</dependency>
