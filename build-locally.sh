@@ -136,6 +136,8 @@ fi
 #-----------------------------------------------------------------------------------------
 # Main logic.
 #-----------------------------------------------------------------------------------------
+MVP_DISTRIBUTION="MVP"
+ISOLATED_DISTRIBUTION="Isolated"
 source_dir="."
 
 project=$(basename ${BASEDIR})
@@ -254,6 +256,16 @@ function generate_pom_xml {
 
     h2 "Generating the pom.xml from the pom.template for ${DISTRIBUTION}"
 
+    dist_flag=""
+    if [[ "${DISTRIBUTION}" == "${ISOLATED_DISTRIBUTION}" ]]; then
+        dist_flag="--isolated"
+    elif [[ "${DISTRIBUTION}" == "${MVP_DISTRIBUTION}" ]]; then
+        dist_flag="--mvp"
+    else
+        error "Programming logic error. Invalid distribution provided. Log file is ${log_file}"
+        exit 1
+    fi
+
     info "Using galasabld tool ${GALASA_BUILD_TOOL_PATH}"
 
     cmd="${GALASA_BUILD_TOOL_PATH} template \
@@ -263,7 +275,7 @@ function generate_pom_xml {
     --releaseMetadata ${WORKSPACE_DIR}/galasa/modules/obr/release.yaml \
     --template pom.template \
     --output pom.xml \
-    --isolated"
+    ${dist_flag}"
 
     echo "Command is $cmd" >> ${log_file}
     $cmd 2>&1 >> ${log_file}
@@ -454,33 +466,33 @@ rm -rf ${MVP_DIR}/bin
 # with information from several release.yaml files.
 get_galasabld_binary_location
 
-generate_pom_xml ${ISOLATED_DIR} "Isolated"
-build_pom_xml ${ISOLATED_DIR} "Isolated" "pom.xml" "target/isolated/maven"
-build_pom_xml ${ISOLATED_DIR} "Isolated" "pom2.xml" "target/isolated/maven"
-build_pom_xml ${ISOLATED_DIR} "Isolated" "pom3.xml" "target/isolated/maven"
-build_pom_xml ${ISOLATED_DIR} "Isolated" "pom4.xml" "target/isolated/maven"
-build_pom_xml ${ISOLATED_DIR} "Isolated" "pom5.xml" "target/isolated/maven"
-build_pom_xml ${ISOLATED_DIR} "Isolated" "pom6.xml" "target/isolated/maven"
-build_pom_xml ${ISOLATED_DIR} "Isolated" "pomJavaDoc.xml" "target/isolated"
-build_pom_xml ${ISOLATED_DIR} "Isolated" "pomDocs.xml" "target/isolated"
-build_pom_galasactl_xml ${ISOLATED_DIR} "Isolated"
-copy_text_files ${ISOLATED_DIR} "Isolated"
-build_zip ${ISOLATED_DIR} "Isolated"
+generate_pom_xml ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION}
+build_pom_xml ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION} "pom.xml" "target/isolated/maven"
+build_pom_xml ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION} "pom2.xml" "target/isolated/maven"
+build_pom_xml ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION} "pom3.xml" "target/isolated/maven"
+build_pom_xml ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION} "pom4.xml" "target/isolated/maven"
+build_pom_xml ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION} "pom5.xml" "target/isolated/maven"
+build_pom_xml ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION} "pom6.xml" "target/isolated/maven"
+build_pom_xml ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION} "pomJavaDoc.xml" "target/isolated"
+build_pom_xml ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION} "pomDocs.xml" "target/isolated"
+build_pom_galasactl_xml ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION}
+copy_text_files ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION}
+build_zip ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION}
 
 success "Galasa Isolated distribution built successfully - the result can be found at ${ISOLATED_DIR}/target/isolated."
 
-generate_pom_xml ${MVP_DIR} "MVP"
-build_pom_xml ${MVP_DIR} "MVP" "pom.xml" "target/isolated/maven"
-build_pom_xml ${MVP_DIR} "MVP" "pom2.xml" "target/isolated/maven"
-build_pom_xml ${MVP_DIR} "MVP" "pom3.xml" "target/isolated/maven"
-build_pom_xml ${MVP_DIR} "MVP" "pom4.xml" "target/isolated/maven"
-build_pom_xml ${MVP_DIR} "MVP" "pom5.xml" "target/isolated/maven"
-build_pom_xml ${MVP_DIR} "MVP" "pom6.xml" "target/isolated/maven"
-build_pom_xml ${MVP_DIR} "MVP" "pomJavaDoc.xml" "target/isolated"
-build_pom_xml ${MVP_DIR} "MVP" "pomDocs.xml" "target/isolated"
-build_pom_galasactl_xml ${MVP_DIR} "MVP"
-copy_text_files ${MVP_DIR} "MVP"
-build_zip ${MVP_DIR} "MVP"
+generate_pom_xml ${MVP_DIR} ${MVP_DISTRIBUTION}
+build_pom_xml ${MVP_DIR} ${MVP_DISTRIBUTION} "pom.xml" "target/isolated/maven"
+build_pom_xml ${MVP_DIR} ${MVP_DISTRIBUTION} "pom2.xml" "target/isolated/maven"
+build_pom_xml ${MVP_DIR} ${MVP_DISTRIBUTION} "pom3.xml" "target/isolated/maven"
+build_pom_xml ${MVP_DIR} ${MVP_DISTRIBUTION} "pom4.xml" "target/isolated/maven"
+build_pom_xml ${MVP_DIR} ${MVP_DISTRIBUTION} "pom5.xml" "target/isolated/maven"
+build_pom_xml ${MVP_DIR} ${MVP_DISTRIBUTION} "pom6.xml" "target/isolated/maven"
+build_pom_xml ${MVP_DIR} ${MVP_DISTRIBUTION} "pomJavaDoc.xml" "target/isolated"
+build_pom_xml ${MVP_DIR} ${MVP_DISTRIBUTION} "pomDocs.xml" "target/isolated"
+build_pom_galasactl_xml ${MVP_DIR} ${MVP_DISTRIBUTION}
+copy_text_files ${MVP_DIR} ${MVP_DISTRIBUTION}
+build_zip ${MVP_DIR} ${MVP_DISTRIBUTION}
 
 success "Galasa MVP distribution built successfully - the result can be found at ${MVP_DIR}/target/isolated."
 
