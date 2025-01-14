@@ -44,6 +44,14 @@
 			<version>10</version>
 			<type>pom</type>
 		</dependency>
+
+		<!-- Needed to resolve net.bytebuddy:byte-buddy:3.25.3 -->
+		<dependency>
+			<groupId>net.bytebuddy</groupId>
+			<artifactId>byte-buddy-parent</artifactId>
+			<version>1.15.10</version>
+			<type>pom</type>
+		</dependency>
 	</dependencies>
 
 	<build>
