@@ -11,13 +11,23 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  NAMESPACE: galasa-dev
-  IMAGE_TAG: main
+  NAMESPACE: ${{ github.repository_owner }}
   
 jobs:
+  check-required-secrets-configured:
+    name: Check required secrets configured
+    uses: galasa-dev/galasa/.github/workflows/check-required-secrets-configured.yaml@main
+    with:
+      check_read_github_packages_username: 'true'
+      check_read_github_packages_token: 'true'
+    secrets:
+      READ_GITHUB_PACKAGES_USERNAME: ${{ secrets.READ_GITHUB_PACKAGES_USERNAME }}
+      READ_GITHUB_PACKAGES_TOKEN: ${{ secrets.READ_GITHUB_PACKAGES_TOKEN }}
+
   build-isolated:
     name: Build Isolated
     runs-on: ubuntu-latest
+    needs: check-required-secrets-configured
 
     steps:
       - name: Checkout Galasa
@@ -39,7 +49,14 @@ jobs:
       
       - name:  Generate Isolated pom.xml
         run: |
-          docker run --rm -v ${{ github.workspace }}:/var/root/ ghcr.io/galasa-dev/galasabld-amd64:main template --releaseMetadata var/root/galasa/modules/framework/release.yaml --releaseMetadata /var/root/galasa/modules/extensions/release.yaml --releaseMetadata /var/root/galasa/modules/managers/release.yaml --releaseMetadata /var/root/galasa/modules/obr/release.yaml --template /var/root/isolated/full/pom.template --output /var/root/isolated/full/pom.xml --isolated
+          docker run --rm -v ${{ github.workspace }}:/var/root/ ghcr.io/galasa-dev/galasabld-amd64:main template \
+          --releaseMetadata var/root/galasa/modules/framework/release.yaml \
+          --releaseMetadata /var/root/galasa/modules/extensions/release.yaml \
+          --releaseMetadata /var/root/galasa/modules/managers/release.yaml \
+          --releaseMetadata /var/root/galasa/modules/obr/release.yaml \
+          --template /var/root/isolated/full/pom.template \
+          --output /var/root/isolated/full/pom.xml \
+          --isolated
       
       - name: Make directory to place build logs in
         working-directory: ./isolated/full
@@ -252,11 +269,12 @@ jobs:
           tags: galasa-isolated-zip:test
           build-args: |
             baseVersion=latest
-            dockerRepository=ghcr.io
+            dockerRepository=${{ env.REGISTRY }}
 
   build-mvp:
     name: Build MVP
     runs-on: ubuntu-latest
+    needs: check-required-secrets-configured
 
     steps:
       - name: Checkout Galasa
@@ -278,7 +296,14 @@ jobs:
       
       - name:  Generate MVP pom.xml
         run: |
-          docker run --rm -v ${{ github.workspace }}:/var/root/ ghcr.io/galasa-dev/galasabld-amd64:main template --releaseMetadata var/root/galasa/modules/framework/release.yaml --releaseMetadata /var/root/galasa/modules/extensions/release.yaml --releaseMetadata /var/root/galasa/modules/managers/release.yaml --releaseMetadata /var/root/galasa/modules/obr/release.yaml --template /var/root/isolated/mvp/pom.template --output /var/root/isolated/mvp/pom.xml --mvp
+          docker run --rm -v ${{ github.workspace }}:/var/root/ ghcr.io/galasa-dev/galasabld-amd64:main template \
+          --releaseMetadata var/root/galasa/modules/framework/release.yaml \
+          --releaseMetadata /var/root/galasa/modules/extensions/release.yaml \
+          --releaseMetadata /var/root/galasa/modules/managers/release.yaml \
+          --releaseMetadata /var/root/galasa/modules/obr/release.yaml \
+          --template /var/root/isolated/mvp/pom.template \
+          --output /var/root/isolated/mvp/pom.xml \
+          --mvp
       
       - name: Make directory to place build logs in
         working-directory: ./isolated/mvp
@@ -491,5 +516,5 @@ jobs:
           tags: galasa-mvp-zip:test
           build-args: |
             baseVersion=latest
-            dockerRepository=ghcr.io
+            dockerRepository=${{ env.REGISTRY }}
       

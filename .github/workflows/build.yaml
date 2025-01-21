@@ -12,7 +12,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  NAMESPACE: galasa-dev
+  NAMESPACE: ${{ github.repository_owner }}
   BRANCH: ${{ github.ref_name }}
 
 jobs:
@@ -24,9 +24,24 @@ jobs:
         run: |
           echo "This workflow is running on GitHub ref ${{ env.BRANCH }}"
 
+  check-required-secrets-configured:
+    name: Check required secrets configured
+    uses: galasa-dev/galasa/.github/workflows/check-required-secrets-configured.yaml@main
+    with:
+      check_write_github_packages_username: 'true'
+      check_write_github_packages_token: 'true'
+      check_read_github_packages_username: 'true'
+      check_read_github_packages_token: 'true'
+    secrets:
+      WRITE_GITHUB_PACKAGES_USERNAME: ${{ secrets.WRITE_GITHUB_PACKAGES_USERNAME }}
+      WRITE_GITHUB_PACKAGES_TOKEN: ${{ secrets.WRITE_GITHUB_PACKAGES_TOKEN }}
+      READ_GITHUB_PACKAGES_USERNAME: ${{ secrets.READ_GITHUB_PACKAGES_USERNAME }}
+      READ_GITHUB_PACKAGES_TOKEN: ${{ secrets.READ_GITHUB_PACKAGES_TOKEN }}
+
   build-isolated:
     name: Build Isolated
     runs-on: ubuntu-latest
+    needs: check-required-secrets-configured
 
     steps:
       - name: Checkout Galasa
@@ -48,8 +63,15 @@ jobs:
       
       - name:  Generate Isolated pom.xml
         run: |
-          docker run --rm -v ${{ github.workspace }}:/var/root/ ghcr.io/galasa-dev/galasabld-amd64:main template --releaseMetadata var/root/galasa/modules/framework/release.yaml --releaseMetadata /var/root/galasa/modules/extensions/release.yaml --releaseMetadata /var/root/galasa/modules/managers/release.yaml --releaseMetadata /var/root/galasa/modules/obr/release.yaml --template /var/root/isolated/full/pom.template --output /var/root/isolated/full/pom.xml --isolated
-      
+          docker run --rm -v ${{ github.workspace }}:/var/root/ ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/galasabld-amd64:main template \
+          --releaseMetadata var/root/galasa/modules/framework/release.yaml \
+          --releaseMetadata /var/root/galasa/modules/extensions/release.yaml \
+          --releaseMetadata /var/root/galasa/modules/managers/release.yaml \
+          --releaseMetadata /var/root/galasa/modules/obr/release.yaml \
+          --template /var/root/isolated/full/pom.template \
+          --output /var/root/isolated/full/pom.xml \
+          --isolated
+
       - name: Make directory to place build logs in
         working-directory: ./isolated/full
         run: |
@@ -211,14 +233,17 @@ jobs:
 
       - name: Login to Github Container Registry
         uses: docker/login-action@v3
+        env:
+          WRITE_GITHUB_PACKAGES_USERNAME: ${{ secrets.WRITE_GITHUB_PACKAGES_USERNAME }}
+          WRITE_GITHUB_PACKAGES_TOKEN: ${{ secrets.WRITE_GITHUB_PACKAGES_TOKEN }}
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ secrets.WRITE_GITHUB_PACKAGES_USERNAME }}
-          password: ${{ secrets.WRITE_GITHUB_PACKAGES_TOKEN }}
+          username: ${{ env.WRITE_GITHUB_PACKAGES_USERNAME }}
+          password: ${{ env.WRITE_GITHUB_PACKAGES_TOKEN }}
   
       - name: Extract metadata for galasa-isolated image
         id: metadata-galasa-isolated
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/galasa-isolated
   
@@ -236,8 +261,8 @@ jobs:
 
       - name: Manually build isolated.tar (full isolated)
         run: |
-          docker pull ghcr.io/galasa-dev/galasa-isolated:main
-          docker save -o ${{ github.workspace }}/isolated/full/target/isolated/isolated.tar ghcr.io/galasa-dev/galasa-isolated:main
+          docker pull ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/galasa-isolated:main
+          docker save -o ${{ github.workspace }}/isolated/full/target/isolated/isolated.tar ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/galasa-isolated:main
 
       - name: Build Isolated zip with maven
         working-directory: ./isolated/full
@@ -264,7 +289,7 @@ jobs:
 
       - name: Extract metadata for galasa-isolated-zip image
         id: metadata-galasa-isolated-zip
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/galasa-isolated-zip
 
@@ -279,24 +304,32 @@ jobs:
           labels: ${{ steps.metadata-galasa-isolated-zip.outputs.labels }}
           build-args: |
             baseVersion=latest
-            dockerRepository=ghcr.io
+            dockerRepository=${{ env.REGISTRY }}
 
       - name: Recycle application in ArgoCD
-        env: 
-            ARGOCD_AUTH_TOKEN: ${{ secrets.ARGOCD_TOKEN }}
+        # Skip this step for forks
+        if: ${{ github.repository_owner == 'galasa-dev' }}
+        env:
+          ARGOCD_AUTH_TOKEN: ${{ secrets.ARGOCD_TOKEN }}
         run: |
-            docker run --env ARGOCD_AUTH_TOKEN=${{ env.ARGOCD_AUTH_TOKEN }} --rm -v ${{ github.workspace }}:/var/workspace ghcr.io/galasa-dev/argocdcli:main app actions run ${{ env.BRANCH }}-maven-repos restart --kind Deployment --resource-name isolated-${{ env.BRANCH }} --server argocd.galasa.dev
+          docker run --env ARGOCD_AUTH_TOKEN=${{ env.ARGOCD_AUTH_TOKEN }} --rm -v ${{ github.workspace }}:/var/workspace \
+          ${{ env.REGISTRY }}/galasa-dev/argocdcli:main app actions run ${{ env.BRANCH }}-maven-repos restart \
+          --kind Deployment --resource-name isolated-${{ env.BRANCH }} --server argocd.galasa.dev
        
       - name: Wait for application health in ArgoCD
-        env: 
-            ARGOCD_AUTH_TOKEN: ${{ secrets.ARGOCD_TOKEN }}
+        # Skip this step for forks
+        if: ${{ github.repository_owner == 'galasa-dev' }}
+        env:
+          ARGOCD_AUTH_TOKEN: ${{ secrets.ARGOCD_TOKEN }}
         run: |
-            docker run --env ARGOCD_AUTH_TOKEN=${{ env.ARGOCD_AUTH_TOKEN }} --rm -v ${{ github.workspace }}:/var/workspace ghcr.io/galasa-dev/argocdcli:main app wait ${{ env.BRANCH }}-maven-repos --resource apps:Deployment:isolated-${{ env.BRANCH }} --health --server argocd.galasa.dev
-
+          docker run --env ARGOCD_AUTH_TOKEN=${{ env.ARGOCD_AUTH_TOKEN }} --rm -v ${{ github.workspace }}:/var/workspace \
+          ${{ env.REGISTRY }}/galasa-dev/argocdcli:main app wait ${{ env.BRANCH }}-maven-repos \
+          --resource apps:Deployment:isolated-${{ env.BRANCH }} --health --server argocd.galasa.dev
 
   build-mvp:
     name: Build MVP
     runs-on: ubuntu-latest
+    needs: check-required-secrets-configured
 
     steps:
       - name: Checkout Galasa
@@ -318,8 +351,15 @@ jobs:
       
       - name:  Generate MVP pom.xml
         run: |
-          docker run --rm -v ${{ github.workspace }}:/var/root/ ghcr.io/galasa-dev/galasabld-amd64:main template --releaseMetadata var/root/galasa/modules/framework/release.yaml --releaseMetadata /var/root/galasa/modules/extensions/release.yaml --releaseMetadata /var/root/galasa/modules/managers/release.yaml --releaseMetadata /var/root/galasa/modules/obr/release.yaml --template /var/root/isolated/mvp/pom.template --output /var/root/isolated/mvp/pom.xml --mvp
-      
+          docker run --rm -v ${{ github.workspace }}:/var/root/ ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/galasabld-amd64:main template \
+          --releaseMetadata var/root/galasa/modules/framework/release.yaml \
+          --releaseMetadata /var/root/galasa/modules/extensions/release.yaml \
+          --releaseMetadata /var/root/galasa/modules/managers/release.yaml \
+          --releaseMetadata /var/root/galasa/modules/obr/release.yaml \
+          --template /var/root/isolated/mvp/pom.template \
+          --output /var/root/isolated/mvp/pom.xml \
+          --mvp
+
       - name: Make directory to place build logs in
         working-directory: ./isolated/mvp
         run: |
@@ -481,14 +521,17 @@ jobs:
 
       - name: Login to Github Container Registry
         uses: docker/login-action@v3
+        env:
+          WRITE_GITHUB_PACKAGES_USERNAME: ${{ secrets.WRITE_GITHUB_PACKAGES_USERNAME }}
+          WRITE_GITHUB_PACKAGES_TOKEN: ${{ secrets.WRITE_GITHUB_PACKAGES_TOKEN }}
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ secrets.WRITE_GITHUB_PACKAGES_USERNAME }}
-          password: ${{ secrets.WRITE_GITHUB_PACKAGES_TOKEN }}
+          username: ${{ env.WRITE_GITHUB_PACKAGES_USERNAME }}
+          password: ${{ env.WRITE_GITHUB_PACKAGES_TOKEN }}
 
       - name: Extract metadata for galasa-mvp image
         id: metadata-galasa-mvp
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/galasa-mvp
   
@@ -506,8 +549,8 @@ jobs:
 
       - name: Manually build isolated.tar (MVP)
         run: |
-          docker pull ghcr.io/galasa-dev/galasa-mvp:main
-          docker save -o ${{ github.workspace }}/isolated/mvp/target/isolated/isolated.tar ghcr.io/galasa-dev/galasa-mvp:main
+          docker pull ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/galasa-mvp:main
+          docker save -o ${{ github.workspace }}/isolated/mvp/target/isolated/isolated.tar ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/galasa-mvp:main
 
       - name: Build MVP zip with maven
         working-directory: ./isolated/mvp
@@ -534,7 +577,7 @@ jobs:
 
       - name: Extract metadata for galasa-mvp-zip image
         id: metadata-galasa-mvp-zip
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/galasa-mvp-zip
   
@@ -549,29 +592,40 @@ jobs:
           labels: ${{ steps.metadata-galasa-mvp-zip.outputs.labels }}
           build-args: |
             baseVersion=latest
-            dockerRepository=ghcr.io
+            dockerRepository=${{ env.REGISTRY }}
 
       - name: Recycle application in ArgoCD
+        # Skip this step for forks
+        if: ${{ github.repository_owner == 'galasa-dev' }}
         env: 
-            ARGOCD_AUTH_TOKEN: ${{ secrets.ARGOCD_TOKEN }}
+          ARGOCD_AUTH_TOKEN: ${{ secrets.ARGOCD_TOKEN }}
         run: |
-            docker run --env ARGOCD_AUTH_TOKEN=${{ env.ARGOCD_AUTH_TOKEN }} --rm -v ${{ github.workspace }}:/var/workspace ghcr.io/galasa-dev/argocdcli:main app actions run ${{ env.BRANCH }}-maven-repos restart --kind Deployment --resource-name mvp-${{ env.BRANCH }} --server argocd.galasa.dev
+          docker run --env ARGOCD_AUTH_TOKEN=${{ env.ARGOCD_AUTH_TOKEN }} --rm -v ${{ github.workspace }}:/var/workspace \
+          ghcr.io/galasa-dev/argocdcli:main app actions run ${{ env.BRANCH }}-maven-repos restart \
+          --kind Deployment --resource-name mvp-${{ env.BRANCH }} --server argocd.galasa.dev
        
       - name: Wait for application health in ArgoCD
+        # Skip this step for forks
+        if: ${{ github.repository_owner == 'galasa-dev' }}
         env: 
-            ARGOCD_AUTH_TOKEN: ${{ secrets.ARGOCD_TOKEN }}
+          ARGOCD_AUTH_TOKEN: ${{ secrets.ARGOCD_TOKEN }}
         run: |
-            docker run --env ARGOCD_AUTH_TOKEN=${{ env.ARGOCD_AUTH_TOKEN }} --rm -v ${{ github.workspace }}:/var/workspace ghcr.io/galasa-dev/argocdcli:main app wait ${{ env.BRANCH }}-maven-repos --resource apps:Deployment:mvp-${{ env.BRANCH }} --health --server argocd.galasa.dev
+          docker run --env ARGOCD_AUTH_TOKEN=${{ env.ARGOCD_AUTH_TOKEN }} --rm -v ${{ github.workspace }}:/var/workspace \
+          ghcr.io/galasa-dev/argocdcli:main app wait ${{ env.BRANCH }}-maven-repos \
+          --resource apps:Deployment:mvp-${{ env.BRANCH }} --health --server argocd.galasa.dev
 
   report-failure:
+    # Skip this job for forks
+    if: ${{ failure() && github.repository_owner == 'galasa-dev' }}
     name: Report failure in workflow
     runs-on: ubuntu-latest
     needs: [log-github-ref, build-isolated, build-mvp]
-    if: failure()
 
     steps:
       - name: Report failure in workflow to Slack
         env: 
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         run : |
-          docker run --rm -v ${{ github.workspace }}:/var/workspace ghcr.io/galasa-dev/galasabld-ibm:main slackpost workflows --repo "isolated" --workflowName "${{ github.workflow }}" --workflowRunNum "${{ github.run_id }}" --ref "${{ env.BRANCH }}" --hook "${{ env.SLACK_WEBHOOK }}"
+          docker run --rm -v ${{ github.workspace }}:/var/workspace ghcr.io/galasa-dev/galasabld-ibm:main slackpost workflows \
+          --repo "isolated" --workflowName "${{ github.workflow }}" --workflowRunNum "${{ github.run_id }}" \
+          --ref "${{ env.BRANCH }}" --hook "${{ env.SLACK_WEBHOOK }}"
