@@ -19,12 +19,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout Galasa
         uses: actions/checkout@v4
         with:
           repository: ${{ env.NAMESPACE }}/galasa
           path: galasa
-
+      
       - name: Checkout Isolated
         uses: actions/checkout@v4
         with:
@@ -35,6 +36,14 @@ jobs:
         with:
           java-version: '17'
           distribution: 'semeru'
+
+      - name: Turn script into an executable
+        working-directory: ./isolated
+        run: chmod +x detect-secrets.sh
+  
+      - name: Run the detect secrets script
+        working-directory: ./isolated
+        run: ./detect-secrets.sh
       
       - name:  Generate Isolated pom.xml
         run: |
