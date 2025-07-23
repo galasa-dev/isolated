@@ -257,6 +257,11 @@ jobs:
           docker pull ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/galasa-isolated:main
           docker save -o ${{ github.workspace }}/isolated/full/target/isolated/isolated.tar ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/galasa-isolated:main
 
+      - name: Manually build docs.tar (full isolated)
+        run: |
+          docker pull ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/galasa-docs-site:main
+          docker save -o ${{ github.workspace }}/isolated/full/target/isolated/docs.tar ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/galasa-docs-site:main
+
       - name: Build Isolated zip with maven
         working-directory: ./isolated/full
         run: |
@@ -561,6 +566,11 @@ jobs:
         run: |
           docker pull ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/galasa-mvp:main
           docker save -o ${{ github.workspace }}/isolated/mvp/target/isolated/isolated.tar ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/galasa-mvp:main
+
+      - name: Manually build docs.tar (MVP)
+        run: |
+          docker pull ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/galasa-docs-site:main
+          docker save -o ${{ github.workspace }}/isolated/mvp/target/isolated/docs.tar ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/galasa-docs-site:main
 
       - name: Build MVP zip with maven
         working-directory: ./isolated/mvp

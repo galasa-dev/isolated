@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>dev.galasa</groupId>
-	<artifactId>galasa-isolated-mvp-docs</artifactId>
+	<artifactId>galasa-isolated-full-docs</artifactId>
    	<version>0.43.0</version>
 	<packaging>pom</packaging>
 
