@@ -51,7 +51,7 @@ jobs:
           REPO: https://github.com/galasa-dev/galasa
         run: |
           WORKFLOW_NAME="Main Build Orchestrator"
-          if [ "${{ env.BRANCH }}" = "release" ]; then
+          if [ "${{ env.BRANCH }}" = "release" ] || [ "${{ env.BRANCH }}" = "prerelease" ]; then
             WORKFLOW_NAME="Release Build Orchestrator"
           fi
 
