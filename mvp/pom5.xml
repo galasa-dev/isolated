@@ -50,6 +50,9 @@
 		<dependency>
 			<groupId>biz.aQute.bnd.builder</groupId>
 			<artifactId>biz.aQute.bnd.builder.gradle.plugin</artifactId>
+			<!-- Must now explicitly set version as cannot use the platform for other BOM artifacts -->
+			<version>7.1.0</version> 
+			<type>pom</type>
 		</dependency>
 
         <!--
