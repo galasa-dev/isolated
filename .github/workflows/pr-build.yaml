@@ -85,7 +85,6 @@ jobs:
           -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.javadoc.repo=https://development.galasa.dev/main/maven-repo/javadoc \
-          -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee isolated-build-logs/build-isolated-pom.log
@@ -100,7 +99,6 @@ jobs:
           -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.javadoc.repo=https://development.galasa.dev/main/maven-repo/javadoc \
-          -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee isolated-build-logs/build-isolated-pom2.log
@@ -115,7 +113,6 @@ jobs:
           -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.javadoc.repo=https://development.galasa.dev/main/maven-repo/javadoc \
-          -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee isolated-build-logs/build-isolated-pom3.log
@@ -130,7 +127,6 @@ jobs:
           -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.javadoc.repo=https://development.galasa.dev/main/maven-repo/javadoc \
-          -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee isolated-build-logs/build-isolated-pom4.log
@@ -145,7 +141,6 @@ jobs:
           -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.javadoc.repo=https://development.galasa.dev/main/maven-repo/javadoc \
-          -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee isolated-build-logs/build-isolated-pom5.log
@@ -160,7 +155,6 @@ jobs:
           -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.javadoc.repo=https://development.galasa.dev/main/maven-repo/javadoc \
-          -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee isolated-build-logs/build-isolated-pom6.log
@@ -175,7 +169,6 @@ jobs:
           -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.javadoc.repo=https://development.galasa.dev/main/maven-repo/javadoc \
-          -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee isolated-build-logs/build-isolated-javadoc.log
@@ -203,7 +196,6 @@ jobs:
           -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.javadoc.repo=https://development.galasa.dev/main/maven-repo/javadoc \
-          -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee isolated-build-logs/build-isolated-galasactl.log
@@ -243,7 +235,6 @@ jobs:
           -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.javadoc.repo=https://development.galasa.dev/main/maven-repo/javadoc \
-          -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee isolated-build-logs/build-isolated-zip.log
@@ -316,7 +307,6 @@ jobs:
           -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.javadoc.repo=https://development.galasa.dev/main/maven-repo/javadoc \
-          -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee mvp-build-logs/build-mvp-pom.log
@@ -331,7 +321,6 @@ jobs:
           -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.javadoc.repo=https://development.galasa.dev/main/maven-repo/javadoc \
-          -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee mvp-build-logs/build-mvp-pom2.log
@@ -346,7 +335,6 @@ jobs:
           -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.javadoc.repo=https://development.galasa.dev/main/maven-repo/javadoc \
-          -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee mvp-build-logs/build-mvp-pom3.log
@@ -361,7 +349,6 @@ jobs:
           -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.javadoc.repo=https://development.galasa.dev/main/maven-repo/javadoc \
-          -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee mvp-build-logs/build-mvp-pom4.log
@@ -376,7 +363,6 @@ jobs:
           -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.javadoc.repo=https://development.galasa.dev/main/maven-repo/javadoc \
-          -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee mvp-build-logs/build-mvp-pom5.log
@@ -391,7 +377,6 @@ jobs:
           -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.javadoc.repo=https://development.galasa.dev/main/maven-repo/javadoc \
-          -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee mvp-build-logs/build-mvp-pom6.log
@@ -406,7 +391,6 @@ jobs:
           -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.javadoc.repo=https://development.galasa.dev/main/maven-repo/javadoc \
-          -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee mvp-build-logs/build-mvp-javadoc.log
@@ -434,7 +418,6 @@ jobs:
           -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.javadoc.repo=https://development.galasa.dev/main/maven-repo/javadoc \
-          -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee mvp-build-logs/build-mvp-galasactl.log
@@ -465,7 +448,6 @@ jobs:
           -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.javadoc.repo=https://development.galasa.dev/main/maven-repo/javadoc \
-          -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee mvp-build-logs/build-mvp-zip.log
