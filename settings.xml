@@ -23,10 +23,6 @@
                     <url>${galasa.javadoc.repo}</url>
                 </repository>
                 <repository>
-                    <id>galasa.docs.repo</id>
-                    <url>${galasa.docs.repo}</url>
-                </repository>
-                <repository>
                     <id>central</id>
                     <url>${galasa.central.repo}</url>
                 </repository>
@@ -43,12 +39,5 @@
             </pluginRepositories>
         </profile>
 	</profiles>
-    <servers>
-        <server>
-            <id>galasa.docs.repo</id>
-            <username>${github.token.read.packages.username}</username>
-            <password>${github.token.read.packages.password}</password>
-        </server>
-    </servers>
 
 </settings>

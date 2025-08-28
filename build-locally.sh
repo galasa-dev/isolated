@@ -62,18 +62,6 @@ Options are:
 -h | --help : Display this help text
 
 Environment Variables:
-GITHUB_USERNAME :
-    Mandatory.
-    A GitHub username with an associated Personal Acccess Token with access scope
-    to read from GitHub Packages. Needed to read the Galasa docs which are stored
-    in GitHub Packages.
-
-GITHUB_TOKEN :
-    Mandatory.
-    A GitHub Personal Access Token with read:packages scope to read from GitHub
-    Packages. Needed to read the Galasa docs which are stored in GitHub Packages.
-    The token must be for the user set in GITHUB_USERNAME.
-
 SOURCE_MAVEN_OBR :
     Optional. Defaults to https://development.galasa.dev/main/maven-repo/obr
     Used to indicate where the Galasa OBR artifacts can be found.
@@ -120,18 +108,6 @@ while [ "$1" != "" ]; do
     esac
     shift
 done
-
-if [[ -z $GITHUB_USERNAME ]]; then
-    error "Environment variable GITHUB_USERNAME needs to be set."
-    usage
-    exit 1
-fi
-
-if [[ -z $GITHUB_TOKEN ]]; then
-    error "Environment variable GITHUB_TOKEN needs to be set."
-    usage
-    exit 1
-fi
 
 #-----------------------------------------------------------------------------------------
 # Main logic.
@@ -306,10 +282,7 @@ function build_pom_xml {
     -Dgalasa.runtime.repo=${SOURCE_MAVEN_OBR} \
     -Dgalasa.simplatform.repo=${SOURCE_MAVEN_SIMPLATFORM} \
     -Dgalasa.javadoc.repo=${SOURCE_MAVEN_JAVADOC} \
-    -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
     -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
-    -Dgithub.token.read.packages.username=${GITHUB_USERNAME} \
-    -Dgithub.token.read.packages.password=${GITHUB_TOKEN} \
     --batch-mode --errors --fail-at-end \
     --settings ${BASEDIR}/settings.xml"
 
@@ -346,10 +319,7 @@ function build_pom_galasactl_xml {
     -Dgalasa.runtime.repo=${SOURCE_MAVEN_OBR} \
     -Dgalasa.simplatform.repo=${SOURCE_MAVEN_SIMPLATFORM} \
     -Dgalasa.javadoc.repo=${SOURCE_MAVEN_JAVADOC} \
-    -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
     -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
-    -Dgithub.token.read.packages.username=${GITHUB_USERNAME} \
-    -Dgithub.token.read.packages.password=${GITHUB_TOKEN} \
     --batch-mode --errors --fail-at-end \
     --settings ${BASEDIR}/settings.xml"
 
@@ -398,10 +368,7 @@ function build_zip {
     -Dgalasa.runtime.repo=${SOURCE_MAVEN_OBR} \
     -Dgalasa.simplatform.repo=${SOURCE_MAVEN_SIMPLATFORM} \
     -Dgalasa.javadoc.repo=${SOURCE_MAVEN_JAVADOC} \
-    -Dgalasa.docs.repo=https://maven.pkg.github.com/galasa-dev-archives/galasa.dev \
     -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
-    -Dgithub.token.read.packages.username=${GITHUB_USERNAME} \
-    -Dgithub.token.read.packages.password=${GITHUB_TOKEN} \
     --batch-mode --errors --fail-at-end \
     --settings ${BASEDIR}/settings.xml"
 
