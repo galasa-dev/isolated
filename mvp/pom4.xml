@@ -7,7 +7,7 @@
 
 	<groupId>dev.galasa</groupId>
 	<artifactId>galasa-isolated-mvp-maven-repo4</artifactId>
-	<version>0.45.0</version>
+	<version>0.46.0</version>
 	<packaging>pom</packaging>
 
 	<properties>
