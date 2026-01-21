@@ -8,14 +8,15 @@ This zip enables a network-free installation of Galasa, removing the requirement
 internet when building or running tests.
 
 This zip file contains:
-    - A maven directory containing dependencies that are required for running Galasa tests.
-    - A javadoc directory containing javadoc API documentation for the Galasa Managers.
-    - A galasactl directory containing the binaries of the Galasa CLI.
-    - A docs.tar file that loads a Docker image, which enables you to run the Galasa website
+    - A 'maven' directory containing dependencies that are required for running Galasa tests.
+    - A 'galasactl' directory containing the binaries of the Galasa CLI.
+    - A 'galasa-docs-site' directory containing the static documentation site for Galasa built with Mkdocs.
+      - Within this directory, there is a 'docs/reference/javadoc' directory containing Javadoc API documentation for the Galasa Managers.
+    - A 'docs.tar' file that loads a Docker image, which enables you to run the Galasa website
       locally on your machine or on an internal server.
-    - An isolated.tar file - an optional Docker image that hosts the Maven directories.
+    - An 'isolated.tar' file - an optional Docker image that hosts the Maven directories.
       Use this file to host Galasa on an internal server that can be accessed by other users.
-
+    - A 'run-simplatform.sh' script to launch the Simplatform applications which can be used to try Galasa out.
 
 You can find out more about Galasa on the Galasa website https://galasa.dev, or you can host the website
 locally by following the instructions in the section below to run a web server on your machine.
@@ -24,7 +25,7 @@ locally by following the instructions in the section below to run a web server o
 Pre-requisites
 ----------------
 
-- Java 11 or above to run Galasa tests. Currently Java 21 or above is not supported.
+- Java 17 or above to run Galasa tests. Currently Java 21 or above is not supported.
 - Docker daemon, an implementation of the Docker commands (e.g., from Rancher, Docker, or Podman) - If you want to load and run the Docker images provided in this zip, you will need Docker installed.
 
 
@@ -64,10 +65,7 @@ Getting started
 --------------------
 
 For information about installing and using the Galasa CLI and getting started with using Galasa, go 
-to the "Docs > Getting started using the Galasa CLI" documentation on the Galasa website. 
-
-The locally run website currently links to the external Javadoc site. You can access the Javadoc 
-locally by using the Javadoc documentation that is contained in the Javadoc directory provided in this zip. 
+to the "Docs > Getting started using the Galasa CLI" documentation on the Galasa website.  
 
 
 Notes
