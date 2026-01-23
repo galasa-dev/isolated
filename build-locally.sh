@@ -72,11 +72,6 @@ SOURCE_MAVEN_SIMPLATFORM :
     Used to indicate where the Galasa Simplatform artifacts can be found.
     Can be set to the location of the local maven repository.
 
-SOURCE_MAVEN_JAVADOC :
-    Optional. Defaults to https://development.galasa.dev/main/maven-repo/javadoc
-    Used to indicate where the Galasa Uber Javadoc can be found.
-    Can be set to the location of the local maven repository.
-
 LOGS_DIR :
     Optional. Defaults to creating a new temporary folder.
     Controls where logs are placed.
@@ -135,14 +130,6 @@ if [[ -z ${SOURCE_MAVEN_SIMPLATFORM} ]]; then
     info "Set this environment variable if you want to override this value."
 else
     info "SOURCE_MAVEN_SIMPLATFORM set to ${SOURCE_MAVEN_SIMPLATFORM} by caller."
-fi
-
-if [[ -z ${SOURCE_MAVEN_JAVADOC} ]]; then
-    export SOURCE_MAVEN_JAVADOC=https://development.galasa.dev/main/maven-repo/javadoc
-    info "SOURCE_MAVEN_JAVADOC repo defaulting to ${SOURCE_MAVEN_JAVADOC}."
-    info "Set this environment variable if you want to override this value."
-else
-    info "SOURCE_MAVEN_JAVADOC set to ${SOURCE_MAVEN_JAVADOC} by caller."
 fi
 
 # Create a temporary dir.
@@ -281,7 +268,6 @@ function build_pom_xml {
     -Dgalasa.target.repo=file:${TARGET_DIR} \
     -Dgalasa.runtime.repo=${SOURCE_MAVEN_OBR} \
     -Dgalasa.simplatform.repo=${SOURCE_MAVEN_SIMPLATFORM} \
-    -Dgalasa.javadoc.repo=${SOURCE_MAVEN_JAVADOC} \
     -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
     --batch-mode --errors --fail-at-end \
     --settings ${BASEDIR}/settings.xml"
@@ -318,7 +304,6 @@ function build_pom_galasactl_xml {
     -Dgalasa.target.repo=file:target/isolated \
     -Dgalasa.runtime.repo=${SOURCE_MAVEN_OBR} \
     -Dgalasa.simplatform.repo=${SOURCE_MAVEN_SIMPLATFORM} \
-    -Dgalasa.javadoc.repo=${SOURCE_MAVEN_JAVADOC} \
     -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
     --batch-mode --errors --fail-at-end \
     --settings ${BASEDIR}/settings.xml"
@@ -367,7 +352,6 @@ function build_zip {
     -Dgalasa.release.repo=file:target/isolated \
     -Dgalasa.runtime.repo=${SOURCE_MAVEN_OBR} \
     -Dgalasa.simplatform.repo=${SOURCE_MAVEN_SIMPLATFORM} \
-    -Dgalasa.javadoc.repo=${SOURCE_MAVEN_JAVADOC} \
     -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
     --batch-mode --errors --fail-at-end \
     --settings ${BASEDIR}/settings.xml"
@@ -440,7 +424,6 @@ build_pom_xml ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION} "pom3.xml" "target/isolat
 build_pom_xml ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION} "pom4.xml" "target/isolated/maven"
 build_pom_xml ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION} "pom5.xml" "target/isolated/maven"
 build_pom_xml ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION} "pom6.xml" "target/isolated/maven"
-build_pom_xml ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION} "pomJavaDoc.xml" "target/isolated"
 build_pom_galasactl_xml ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION}
 copy_text_files ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION}
 build_zip ${ISOLATED_DIR} ${ISOLATED_DISTRIBUTION}
@@ -454,7 +437,6 @@ build_pom_xml ${MVP_DIR} ${MVP_DISTRIBUTION} "pom3.xml" "target/isolated/maven"
 build_pom_xml ${MVP_DIR} ${MVP_DISTRIBUTION} "pom4.xml" "target/isolated/maven"
 build_pom_xml ${MVP_DIR} ${MVP_DISTRIBUTION} "pom5.xml" "target/isolated/maven"
 build_pom_xml ${MVP_DIR} ${MVP_DISTRIBUTION} "pom6.xml" "target/isolated/maven"
-build_pom_xml ${MVP_DIR} ${MVP_DISTRIBUTION} "pomJavaDoc.xml" "target/isolated"
 build_pom_galasactl_xml ${MVP_DIR} ${MVP_DISTRIBUTION}
 copy_text_files ${MVP_DIR} ${MVP_DISTRIBUTION}
 build_zip ${MVP_DIR} ${MVP_DISTRIBUTION}
