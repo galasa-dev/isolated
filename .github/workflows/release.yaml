@@ -1,0 +1,88 @@
+#
+# Copyright contributors to the Galasa project
+#
+# SPDX-License-Identifier: EPL-2.0
+#
+name: Release Galasa Isolated and MVP
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseBranch:
+        description: 'The branch to use for the isolated release'
+        required: false
+        default: 'release'
+  workflow_call:
+    inputs:
+      releaseBranch:
+        description: 'The branch to use for the CLI release'
+        required: false
+        default: 'release'
+        type: string
+
+env:
+  NAMESPACE: ${{ github.repository_owner }}
+
+jobs:
+  get-galasa-version:
+    name: Get Galasa Version
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 'galasa' repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.NAMESPACE }}/galasa
+          path: ${{ github.workspace }}/galasa
+          sparse-checkout: |
+            build.properties
+
+      - name: Get Galasa Version from build.properties file
+        id: get-galasa-version
+        run: |
+          cat ${{ github.workspace }}/galasa/build.properties | grep "=" >> $GITHUB_OUTPUT
+
+    outputs:
+      galasa-version: ${{ steps.get-galasa-version.outputs.GALASA_VERSION }}
+
+  create-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+
+    needs: [get-galasa-version]
+
+    permissions:
+      contents: write
+
+    env:
+      GALASA_VERSION: ${{ needs.get-galasa-version.outputs.galasa-version }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Make temp directory
+        run: |
+          mkdir ${{ github.workspace }}/temp
+
+      - name: Download Galasa MVP zip
+        working-directory: ${{ github.workspace }}/temp
+        run: |
+          wget https://development.galasa.dev/${{ inputs.releaseBranch }}/maven-repo/mvp/dev/galasa/galasa-isolated-mvp/${{ env.GALASA_VERSION }}/galasa-isolated-mvp-${{ env.GALASA_VERSION }}.zip
+
+      - name: Download Galasa Isolated zip
+        working-directory: ${{ github.workspace }}/temp
+        run: |
+          wget https://development.galasa.dev/${{ inputs.releaseBranch }}/maven-repo/isolated/dev/galasa/galasa-isolated/${{ env.GALASA_VERSION }}/galasa-isolated-${{ env.GALASA_VERSION }}.zip
+
+      - name: Create GitHub Release
+        working-directory: ${{ github.workspace }}/temp
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create v${{ env.GALASA_VERSION }} \
+            --repo ${{ github.repository }} \
+            --title "v${{ env.GALASA_VERSION }}" \
+            --generate-notes \
+            galasa-isolated-mvp-${{ env.GALASA_VERSION }}.zip \
+            galasa-isolated-${{ env.GALASA_VERSION }}.zip
