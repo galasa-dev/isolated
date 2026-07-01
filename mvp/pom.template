@@ -85,12 +85,19 @@
         <dependency>
             <groupId>{{.GroupId}}</groupId>
             <artifactId>{{.ArtifactId}}</artifactId>{{if .Version}}
-            <version>{{.Version}}</version>{{end}}
+            <version>{{.Version}}</version>{{end}}{{if .Exclusions}}
+            <exclusions>{{range .Exclusions}}
+                <exclusion>
+                    <groupId>{{.GroupId}}</groupId>
+                    <artifactId>{{.ArtifactId}}</artifactId>
+                </exclusion>{{end}}
+            </exclusions>{{end}}
         </dependency>
     {{end}}
 
         <!--
-            To resolve commons-logging:1.3.4, commons-parent:72 and org.apache:33 are required.
+            Required to resolve commons-logging:1.3.4 — commons-parent:72 is its parent POM,
+            and org.apache:33 is the parent of commons-parent.
         -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -104,6 +111,11 @@
 			<version>33</version>
 			<type>pom</type>
 		</dependency>
+
+        <!--
+            Required to resolve org.junit.jupiter:junit-jupiter and related JUnit 5 artifacts
+            pulled in transitively by the test managers.
+        -->
 		<dependency>
 			<groupId>org.junit</groupId>
 			<artifactId>junit-bom</artifactId>
@@ -111,8 +123,11 @@
 			<type>pom</type>
 		</dependency>
 
-        <!-- 
-            The following are required to resolve transitive dependencies for the selenium manager
+        <!--
+            Required to resolve transitive dependencies for the selenium manager:
+            - auto-service-aggregator is the parent POM for com.google.auto.service:auto-service-annotations
+            - failsafe-parent is the parent POM for dev.failsafe:failsafe
+            - oss-parent is a transitive parent POM required by several selenium dependencies
         -->
         <dependency>
             <groupId>com.google.auto.service</groupId>
