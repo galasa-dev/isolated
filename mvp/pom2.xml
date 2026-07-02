@@ -53,6 +53,34 @@
 			<version>1.15.10</version>
 			<type>pom</type>
 		</dependency>
+
+        <!--
+            The following POMs are used to resolve org.apache.httpcomponents.client5:httpclient5:5.6.1
+        -->
+		<dependency>
+			<groupId>org.junit</groupId>
+			<artifactId>junit-bom</artifactId>
+			<version>5.13.3</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-bom</artifactId>
+			<version>1.49.0</version>
+			<type>pom</type>
+		</dependency>
+
+        <dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.25</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-parent</artifactId>
+			<version>1.7.25</version>
+			<type>pom</type>
+		</dependency>
 	</dependencies>
 
 	<build>
