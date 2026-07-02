@@ -469,7 +469,7 @@ function build_pom_galasactl_xml {
     h2 "Getting the galasactl binaries"
 
     mkdir bin
-    cp ${WORKSPACE_DIR}/cli/bin/galasactl* bin
+    cp ${WORKSPACE_DIR}/galasa/modules/cli/bin/galasactl* bin
 
     h2 "Building the pomGalasactl.xml for ${DISTRIBUTION}"
 
