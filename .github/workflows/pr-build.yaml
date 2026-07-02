@@ -88,6 +88,27 @@ jobs:
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee isolated-build-logs/build-isolated-pom.log
 
+      - name: Clear dev.galasa remote-repository tracking from local Maven cache
+        run: find ~/.m2/repository/dev/galasa -name "_remote.repositories" -delete
+
+      - name: Build Isolated pomApiDeps.xml with maven
+        working-directory: ./isolated/full
+        run: |
+          set -o pipefail
+          mvn -f pomApiDeps.xml process-sources -X \
+          -Dgpg.skip=true \
+          -Dgalasa.target.repo=file:target/isolated/maven \
+          -Dgalasa.target.repo.dir=target/isolated/maven \
+          -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
+          -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
+          -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
+          --batch-mode --errors --fail-at-end \
+          --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee isolated-build-logs/build-isolated-pomApiDeps.log
+
+      - name: Fix isolated copy-dep repo metadata
+        working-directory: ./isolated/full
+        run: ${{ github.workspace }}/isolated/fix-copy-dep-repo.sh target/isolated/maven
+
       - name: Build Isolated pom2.xml with maven
         working-directory: ./isolated/full
         run: |
@@ -113,45 +134,6 @@ jobs:
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee isolated-build-logs/build-isolated-pom3.log
-
-      - name: Build Isolated pom4.xml with maven
-        working-directory: ./isolated/full
-        run: |
-          set -o pipefail
-          mvn -f pom4.xml process-sources -X \
-          -Dgpg.skip=true \
-          -Dgalasa.target.repo=file:target/isolated/maven \
-          -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
-          -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
-          -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
-          --batch-mode --errors --fail-at-end \
-          --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee isolated-build-logs/build-isolated-pom4.log
-
-      - name: Build Isolated pom5.xml with maven
-        working-directory: ./isolated/full
-        run: |
-          set -o pipefail
-          mvn -f pom5.xml process-sources -X \
-          -Dgpg.skip=true \
-          -Dgalasa.target.repo=file:target/isolated/maven \
-          -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
-          -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
-          -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
-          --batch-mode --errors --fail-at-end \
-          --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee isolated-build-logs/build-isolated-pom5.log
-
-      - name: Build Isolated pom6.xml with maven
-        working-directory: ./isolated/full
-        run: |
-          set -o pipefail
-          mvn -f pom6.xml process-sources -X \
-          -Dgpg.skip=true \
-          -Dgalasa.target.repo=file:target/isolated/maven \
-          -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
-          -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
-          -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
-          --batch-mode --errors --fail-at-end \
-          --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee isolated-build-logs/build-isolated-pom6.log
 
       - name: Download galasactl binaries
         working-directory: ./isolated/full
@@ -288,6 +270,27 @@ jobs:
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee mvp-build-logs/build-mvp-pom.log
 
+      - name: Clear dev.galasa remote-repository tracking from local Maven cache
+        run: find ~/.m2/repository/dev/galasa -name "_remote.repositories" -delete
+
+      - name: Build MVP pomApiDeps.xml with maven
+        working-directory: ./isolated/mvp
+        run: |
+          set -o pipefail
+          mvn -f pomApiDeps.xml process-sources -X \
+          -Dgpg.skip=true \
+          -Dgalasa.target.repo=file:target/isolated/maven \
+          -Dgalasa.target.repo.dir=target/isolated/maven \
+          -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
+          -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
+          -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
+          --batch-mode --errors --fail-at-end \
+          --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee mvp-build-logs/build-mvp-pomApiDeps.log
+
+      - name: Fix MVP copy-dep repo metadata
+        working-directory: ./isolated/mvp
+        run: ${{ github.workspace }}/isolated/fix-copy-dep-repo.sh target/isolated/maven
+
       - name: Build MVP pom2.xml with maven
         working-directory: ./isolated/mvp
         run: |
@@ -313,45 +316,6 @@ jobs:
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee mvp-build-logs/build-mvp-pom3.log
-
-      - name: Build MVP pom4.xml with maven
-        working-directory: ./isolated/mvp
-        run: |
-          set -o pipefail
-          mvn -f pom4.xml process-sources -X \
-          -Dgpg.skip=true \
-          -Dgalasa.target.repo=file:target/isolated/maven \
-          -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
-          -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
-          -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
-          --batch-mode --errors --fail-at-end \
-          --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee mvp-build-logs/build-mvp-pom4.log
-
-      - name: Build MVP pom5.xml with maven
-        working-directory: ./isolated/mvp
-        run: |
-          set -o pipefail
-          mvn -f pom5.xml process-sources -X \
-          -Dgpg.skip=true \
-          -Dgalasa.target.repo=file:target/isolated/maven \
-          -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
-          -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
-          -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
-          --batch-mode --errors --fail-at-end \
-          --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee mvp-build-logs/build-mvp-pom5.log
-
-      - name: Build MVP pom6.xml with maven
-        working-directory: ./isolated/mvp
-        run: |
-          set -o pipefail
-          mvn -f pom6.xml process-sources -X \
-          -Dgpg.skip=true \
-          -Dgalasa.target.repo=file:target/isolated/maven \
-          -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
-          -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
-          -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
-          --batch-mode --errors --fail-at-end \
-          --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee mvp-build-logs/build-mvp-pom6.log
 
       - name: Download galasactl binaries
         working-directory: ./isolated/mvp

@@ -14,32 +14,54 @@
 		<galasa.target.repo>file:${project.build.directory}/repo</galasa.target.repo>
 	</properties>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>dev.galasa</groupId>
+				<artifactId>dev.galasa.platform</artifactId>
+				<version>1.0.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
-        <!--
-            The following POMs are used to resolve dev.galasa.wrapping.httpclient-osgi
-        -->
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcomponents-core</artifactId>
-            <version>4.4.16</version>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcomponents-client</artifactId>
-            <version>4.5.14</version>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcomponents-parent</artifactId>
-            <version>11</version>
-            <type>pom</type>
-        </dependency>
+			<groupId>biz.aQute.bnd</groupId>
+			<artifactId>biz.aQute.bnd.gradle</artifactId>
+		</dependency>
 		<dependency>
-			<groupId>org.apache</groupId>
-			<artifactId>apache</artifactId>
-			<version>21</version>
+			<groupId>biz.aQute.bnd</groupId>
+			<artifactId>biz.aQute.bnd.embedded-repo</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>biz.aQute.bnd</groupId>
+			<artifactId>biz.aQute.bndlib</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>biz.aQute.bnd</groupId>
+			<artifactId>biz.aQute.repository</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>biz.aQute.bnd</groupId>
+			<artifactId>biz.aQute.resolve</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>biz.aQute.bnd.builder</groupId>
+			<artifactId>biz.aQute.bnd.builder.gradle.plugin</artifactId>
+			<!-- Must now explicitly set version as cannot use the platform for other BOM artifacts -->
+			<version>7.1.0</version> 
+			<type>pom</type>
+		</dependency>
+
+        <!--
+            The following POMs are used to resolve commons-codec:1.16.1
+        -->
+		<dependency>
+			<groupId>org.junit</groupId>
+			<artifactId>junit-bom</artifactId>
+			<version>5.10.1</version>
 			<type>pom</type>
 		</dependency>
 	</dependencies>

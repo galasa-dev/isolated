@@ -76,9 +76,7 @@ function process_maven_file() {
 
 process_maven_file pom2.xml
 process_maven_file pom3.xml
-process_maven_file pom4.xml
-process_maven_file pom5.xml
-process_maven_file pom6.xml
+process_maven_file pomApiDeps.xml
 process_maven_file pomGalasactl.xml
 process_maven_file pomZip.xml
 
