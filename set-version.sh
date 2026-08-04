@@ -264,11 +264,13 @@ mkdir -p $temp_dir
 #     - full/pom3.xml - the first version tag and the version of the platform needs replacing.
 #     - full/pomZip.xml - only the first version tag needs replacing.
 #     - full/pomGalasactl.xml
+#     - full/pomApiDeps.xml - the first version tag and the version of the platform needs replacing.
 #     - full/resources/run-simplatform.sh - the SIMBANK_VERSION needs replacing.
 #     - mvp/pom2.xml - the first version tag and the version of the platform needs replacing.
 #     - mvp/pom3.xml - the first version tag and the version of the platform needs replacing.
 #     - mvp/pomZip.xml
 #     - mvp/pomGalasactl.xml
+#     - mvp/pomApiDeps.xml - the first version tag and the version of the platform needs replacing.
 #     - mvp/resources/run-simplatform.sh - the SIMBANK_VERSION needs replacing.
 
 update_pom_first_version_tag $BASEDIR/full/pom2.xml $temp_dir
@@ -277,6 +279,8 @@ update_pom_first_version_tag $BASEDIR/full/pom3.xml $temp_dir
 update_pom_platform_version_tag $BASEDIR/full/pom3.xml $temp_dir
 update_pom_first_version_tag $BASEDIR/full/pomZip.xml $temp_dir
 update_pom_first_version_tag $BASEDIR/full/pomGalasactl.xml $temp_dir
+update_pom_first_version_tag $BASEDIR/full/pomApiDeps.xml $temp_dir
+update_pom_platform_version_tag $BASEDIR/full/pomApiDeps.xml $temp_dir
 update_simbank_version_in_script $BASEDIR/full/resources/run-simplatform.sh $temp_dir
 
 update_pom_first_version_tag $BASEDIR/mvp/pom2.xml $temp_dir
@@ -285,4 +289,6 @@ update_pom_first_version_tag $BASEDIR/mvp/pom3.xml $temp_dir
 update_pom_platform_version_tag $BASEDIR/mvp/pom3.xml $temp_dir
 update_pom_first_version_tag $BASEDIR/mvp/pomZip.xml $temp_dir
 update_pom_first_version_tag $BASEDIR/mvp/pomGalasactl.xml $temp_dir
+update_pom_first_version_tag $BASEDIR/mvp/pomApiDeps.xml $temp_dir
+update_pom_platform_version_tag $BASEDIR/mvp/pomApiDeps.xml $temp_dir
 update_simbank_version_in_script $BASEDIR/mvp/resources/run-simplatform.sh $temp_dir
