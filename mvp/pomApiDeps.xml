@@ -34,10 +34,6 @@
     <dependencies>
         <dependency>
             <groupId>dev.galasa</groupId>
-            <artifactId>dev.galasa.wrapping.httpclient-osgi</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.wrapping.httpclient5</artifactId>
         </dependency>
         <dependency>
