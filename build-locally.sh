@@ -447,6 +447,16 @@ function build_pom_xml {
     --settings ${BASEDIR}/settings.xml"
 
     echo "Command is $cmd" >> ${log_file}
+
+    if [[ "${POM_FILE}" == "pomApiDeps.xml" ]]; then
+        # maven-dependency-plugin:copy-dependencies with addParentPoms=true downloads
+        # dependency POMs into ~/.m2 and validates them during resolution. Some
+        # third-party POMs are malformed and only reach ~/.m2 during this step.
+        # Allow the first attempt to fail, fix any malformed POMs in ~/.m2, then retry.
+        $cmd 2>&1 >> ${log_file} || true
+        ${BASEDIR}/fix-m2-malformed-poms.sh ${HOME}/.m2/repository
+    fi
+
     $cmd 2>&1 >> ${log_file}
 
     rc=$?
@@ -540,6 +550,13 @@ function build_zip {
     fi
     success "pomZip.xml built ok - log is at ${log_file}"
 
+}
+
+#------------------------------------------------------------------------------------
+function fix_m2_malformed_poms {
+    h2 "Fixing malformed POMs in local Maven repository (~/.m2)"
+    ${BASEDIR}/fix-m2-malformed-poms.sh
+    success "Malformed POM fix complete."
 }
 
 #------------------------------------------------------------------------------------
