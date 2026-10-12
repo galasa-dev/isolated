@@ -103,6 +103,18 @@ jobs:
           -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
           -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
           --batch-mode --errors --fail-at-end \
+          --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee isolated-build-logs/build-isolated-pomApiDeps.log || true
+
+          ${{ github.workspace }}/isolated/fix-m2-malformed-poms.sh ~/.m2/repository
+
+          mvn -f pomApiDeps.xml process-sources -X \
+          -Dgpg.skip=true \
+          -Dgalasa.target.repo=file:target/isolated/maven \
+          -Dgalasa.target.repo.dir=target/isolated/maven \
+          -Dgalasa.runtime.repo=https://development.galasa.dev/main/maven-repo/obr \
+          -Dgalasa.simplatform.repo=https://development.galasa.dev/main/maven-repo/simplatform \
+          -Dgalasa.central.repo=https://repo.maven.apache.org/maven2/ \
+          --batch-mode --errors --fail-at-end \
           --settings ${{ github.workspace }}/isolated/settings.xml 2>&1 | tee isolated-build-logs/build-isolated-pomApiDeps.log
 
       - name: Fix isolated copy-dep repo metadata
